@@ -13,8 +13,8 @@ export default function Task() {
       <Priority />
       <Dateselector />
       <Description />
-      <Button>Save</Button>
-      <Button>Delete</Button>
+      <Button name="Save"></Button>
+      <Button name="Delete"></Button>
     </div>
   );
 }
