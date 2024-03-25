@@ -1,14 +1,14 @@
-
-
-
-import './App.css'
+import "./App.css";
+import Input from "./components/Input";
+import Task from "./components/Task";
 
 function App() {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-  )
+    <div className="todo-container p-8 border-2 max-w-2xl">
+      <Input />
+      <Task />
+    </div>
+  );
 }
 
-export default App
+export default App;
