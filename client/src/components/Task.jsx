@@ -4,17 +4,34 @@ import Priority from "./Priority";
 import Dateselector from "./Dateselector";
 import Description from "./Description";
 import Button from "./Button";
+import PropTypes from "prop-types";
 
-export default function Task() {
+export default function Task({
+  id,
+  name,
+  completed,
+  date,
+  priority,
+  description,
+}) {
+  console.log(id);
   return (
     <div className="task-container border-2">
-      <Checkbox />
-      <Textinput />
-      <Priority />
-      <Dateselector />
-      <Description />
+      <Checkbox com={completed} />
+      <Textinput taskname={name} />
+      <Priority prio={priority} />
+      <Dateselector dat={date} />
+      <Description desc={description} />
       <Button name="Save"></Button>
-      <Button name="Delete"></Button>
     </div>
   );
 }
+
+Task.propTypes = {
+  id: PropTypes.number,
+  name: PropTypes.string,
+  completed: PropTypes.bool,
+  date: PropTypes.string,
+  priority: PropTypes.string,
+  description: PropTypes.string,
+};
