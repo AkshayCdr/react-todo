@@ -16,6 +16,7 @@ export default function Task({
 }) {
   return (
     <div className="task-container border-2">
+      <input type="hidden" name="id" value={id} />
       <Checkbox com={completed} />
       <Textinput taskname={name} />
       <Priority prio={priority} />
