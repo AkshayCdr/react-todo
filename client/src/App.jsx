@@ -37,9 +37,7 @@ function App() {
   }, []);
 
   const handleSaveClick = async (event) => {
-    event.preventDefault();
     const data = Object.fromEntries(new FormData(event.target));
-    console.log(data);
     const response = await fetch(`http://localhost:3000/task/${data.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -56,7 +54,6 @@ function App() {
       {todos &&
         todos.map((todo) => {
           return (
-            // Add return statement here
             <form key={todo.id} action="" onSubmit={handleSaveClick}>
               <Task
                 id={todo.id}

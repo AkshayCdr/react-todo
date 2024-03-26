@@ -1,4 +1,11 @@
 // import { Todo } from "./todos.model.js";
+import { createClient } from "redis";
+
+const client = createClient();
+
+(async () => {
+  await client.connect();
+})();
 
 function getCurrentDate() {
   const currentDate = new Date();
@@ -30,6 +37,7 @@ export async function getData() {
   try {
     // const todo = await Todo.find();
     // return todo;
+    await client.get("todo");
     return todos;
   } catch (error) {
     console.log(error.message);
@@ -38,8 +46,9 @@ export async function getData() {
 
 export async function setData(data) {
   try {
-    // await Todo.create(data);
-    todos.push(data);
+    // await client.connect();
+    await client.set("todo", JSON.stringify(data));
+    // todos.push(data);
   } catch (error) {
     console.log(error.message);
   }
