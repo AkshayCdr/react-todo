@@ -6,7 +6,8 @@ export default function Priority({ prio }) {
       <select
         className="select select-bordered select-sm w-full max-w-xs"
         name="priority"
-        value={prio}
+        // value={prio}
+        defaultValue={prio}
       >
         {/* <option disabled selected>
           Priority

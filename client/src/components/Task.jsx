@@ -14,7 +14,6 @@ export default function Task({
   priority,
   description,
 }) {
-  console.log(id);
   return (
     <div className="task-container border-2">
       <Checkbox com={completed} />

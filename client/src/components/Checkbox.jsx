@@ -5,7 +5,8 @@ export default function Checkbox({ com }) {
     <input
       type="checkbox"
       name="completed"
-      value={com}
+      // value={com}
+      defaultValue={com}
       defaultChecked
       className="checkbox checkbox-success"
     />

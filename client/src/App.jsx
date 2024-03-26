@@ -4,6 +4,14 @@ import Task from "./components/Task";
 // import Button from "./components/Button";
 
 function App() {
+  function getCurrentDate() {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Month is 0-indexed, so add 1
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(event.target));
@@ -15,17 +23,17 @@ function App() {
       id: 1,
       name: "first task",
       completed: true,
-      date: new Date("12/02/2024").toDateString(),
+      date: getCurrentDate(),
       priority: "low",
       description: "wake up ",
     },
     {
       id: 2,
-      name: "first task",
-      completed: true,
-      date: new Date("12/02/2024").toDateString(),
-      priority: "low",
-      description: "wake up ",
+      name: "second task",
+      completed: false,
+      date: getCurrentDate(),
+      priority: "Mid",
+      description: "eat ",
     },
   ];
 

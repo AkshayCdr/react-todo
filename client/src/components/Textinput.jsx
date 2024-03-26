@@ -26,7 +26,8 @@ export default function Textinput({ taskname }) {
       <input
         type="text"
         name="name"
-        value={taskname}
+        // value={taskname}
+        defaultValue={taskname}
         placeholder="Type here"
         className="input input-bordered input-sm w-full max-w-xs"
       />

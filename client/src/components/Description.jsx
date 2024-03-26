@@ -7,8 +7,13 @@ export default function Description({ desc }) {
         placeholder="Bio"
         name="description"
         className="textarea textarea-bordered textarea-md w-full max-w-xs"
-        value={desc}
+        // value={desc}
+        defaultValue={desc}
       ></textarea>
     </div>
   );
 }
+
+Description.propTypes = {
+  desc: PropTypes.string,
+};
