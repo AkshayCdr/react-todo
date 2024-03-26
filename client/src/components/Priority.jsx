@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-
 export default function Priority({ prio }) {
   return (
     <div>
@@ -19,7 +17,3 @@ export default function Priority({ prio }) {
     </div>
   );
 }
-
-Priority.propTypes = {
-  prio: PropTypes.string,
-};

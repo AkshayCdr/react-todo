@@ -27,6 +27,7 @@ function App() {
     });
     if (!response.ok) return new Error("Error getting data");
     const data = await response.json();
+    console.log(data);
     setTodos(data);
   };
 
@@ -51,7 +52,9 @@ function App() {
       <form action="" onSubmit={handleSubmit}>
         <Input />
       </form>
+
       {todos &&
+        todos.length > 0 &&
         todos.map((todo) => {
           return (
             <form key={todo.id} action="" onSubmit={handleSaveClick}>

@@ -18,8 +18,6 @@
 //   taskname: PropTypes.string,
 // };
 
-import PropTypes from "prop-types";
-
 export default function Textinput({ taskname }) {
   return (
     <div>
@@ -34,7 +32,3 @@ export default function Textinput({ taskname }) {
     </div>
   );
 }
-
-Textinput.propTypes = {
-  taskname: PropTypes.string, // Make it required
-};

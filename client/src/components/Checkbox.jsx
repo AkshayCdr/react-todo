@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-
 export default function Checkbox({ com }) {
   return (
     <input
@@ -12,7 +10,3 @@ export default function Checkbox({ com }) {
     />
   );
 }
-
-Checkbox.propTypes = {
-  com: PropTypes.bool,
-};

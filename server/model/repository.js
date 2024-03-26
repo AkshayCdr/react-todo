@@ -14,31 +14,12 @@ function getCurrentDate() {
   const day = String(currentDate.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 }
-let todos = [
-  {
-    id: 1,
-    name: "first task",
-    completed: true,
-    date: getCurrentDate(),
-    priority: "low",
-    description: "wake up ",
-  },
-  {
-    id: 2,
-    name: "second task",
-    completed: false,
-    date: getCurrentDate(),
-    priority: "Mid",
-    description: "eat ",
-  },
-];
 
 export async function getData() {
   try {
-    // const todo = await Todo.find();
-    // return todo;
-    await client.get("todo");
-    return todos;
+    const data = await client.get("todo");
+    const jsonData = JSON.parse(data);
+    return jsonData;
   } catch (error) {
     console.log(error.message);
   }
@@ -47,7 +28,7 @@ export async function getData() {
 export async function setData(data) {
   try {
     // await client.connect();
-    await client.set("todo", JSON.stringify(data));
+    await client.setEx("todo", JSON.stringify(data));
     // todos.push(data);
   } catch (error) {
     console.log(error.message);

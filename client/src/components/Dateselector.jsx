@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-
 export default function Dateselector({ dat }) {
   return (
     <input
@@ -11,7 +9,3 @@ export default function Dateselector({ dat }) {
     />
   );
 }
-
-Dateselector.propTypes = {
-  dat: PropTypes.string,
-};

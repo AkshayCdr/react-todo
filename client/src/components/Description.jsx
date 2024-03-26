@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-
 export default function Description({ desc }) {
   return (
     <div>
@@ -13,7 +11,3 @@ export default function Description({ desc }) {
     </div>
   );
 }
-
-Description.propTypes = {
-  desc: PropTypes.string,
-};
