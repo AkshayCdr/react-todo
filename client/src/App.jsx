@@ -59,7 +59,19 @@ function App() {
     });
   }
 
-  console.log(todos);
+  function updateTodo(id, data) {
+    console.log(data);
+    setTodos((currentTodos) => {
+      return currentTodos.map((todo) => {
+        // console.log(todo);
+        if (todo.id === id) {
+          // console.log({ ...todo, ...data });
+          return { ...todo, ...data };
+        }
+        return todo;
+      });
+    });
+  }
 
   return (
     <>
@@ -68,6 +80,7 @@ function App() {
         todos={todos}
         toggleComplete={toggleComplete}
         handleDelete={handleDelete}
+        updateTodo={updateTodo}
       />
     </>
   );
