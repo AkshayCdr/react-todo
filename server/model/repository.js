@@ -17,6 +17,7 @@ function getCurrentDate() {
 
 export async function getData() {
   try {
+    console.log("getting data");
     const data = await client.get("todo");
     const jsonData = JSON.parse(data);
     return jsonData;
@@ -28,9 +29,15 @@ export async function getData() {
 export async function setData(data) {
   try {
     // await client.connect();
-    await client.setEx("todo", JSON.stringify(data));
+    console.log("setting data ");
+    await client.set("todo", JSON.stringify(data), (err, res) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("Data stored successfully:", res);
+      }
+    });
     console.log(data);
-    // todos.push(data);
   } catch (error) {
     console.log(error.message);
   }

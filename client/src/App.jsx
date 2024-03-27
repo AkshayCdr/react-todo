@@ -11,7 +11,8 @@ function App() {
     //     headers: { "Content-Type": "application/json" },
     //   });
     //   if (!response.ok) return new Error("Error adding data");
-    //   return await response.json();
+    //   const data = await response.json();
+    //   return data === null ? [] : JSON.parse(data);
     // })();
     const data = localStorage.getItem("todos");
     return data === null ? [] : JSON.parse(data);
@@ -63,9 +64,7 @@ function App() {
     console.log(data);
     setTodos((currentTodos) => {
       return currentTodos.map((todo) => {
-        // console.log(todo);
         if (todo.id === id) {
-          // console.log({ ...todo, ...data });
           return { ...todo, ...data };
         }
         return todo;
