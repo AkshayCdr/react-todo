@@ -1,47 +1,47 @@
 import { useState } from "react";
 import "./App.css";
+import InputForm from "./components/InputForm";
+import TodoList from "./components/TodoList";
 
 function App() {
-  const [taskname, setTaskname] = useState([]);
   const [todos, setTodos] = useState([]);
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  function addTodo(taskname) {
     setTodos((currentTodos) => {
       return [
         ...currentTodos,
         {
           id: Math.random(),
           name: taskname,
+          completed: false,
         },
       ];
     });
   }
+
+  function toggleComplete(id, completed) {
+    setTodos((currentTodos) => {
+      return currentTodos.map((todo) => {
+        if (todo.id === id) return { ...todo, completed };
+        return todo;
+      });
+    });
+  }
+
+  function handleDelete(id) {
+    setTodos((currentTodos) => {
+      return currentTodos.filter((todo) => {
+        return todo.id !== id;
+      });
+    });
+  }
+
   console.log(todos);
 
   return (
     <>
-      <form action="" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          onChange={(e) => setTaskname(e.target.value)}
-        />
-        <button>submit</button>
-      </form>
-      <form action="">
-        <input type="checkbox" name="completed" id="" />
-        <input type="text" name="name" id="" />
-        <select name="priority" id="">
-          <option value="">--select--</option>
-          <option value="LOW">LOW</option>
-          <option value="MID">MID</option>
-          <option value="HIGH">HIGH</option>
-        </select>
-        <input type="date" name="date" id="" />
-        <textarea name="description" id="" cols="30" rows="10"></textarea>
-        <button>save</button>
-      </form>
+      <InputForm onSubmit={addTodo} />
+      <TodoList />
     </>
   );
 }
