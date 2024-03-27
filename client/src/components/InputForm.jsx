@@ -14,6 +14,7 @@ export default function InputForm({ onSubmit }) {
       <input
         type="text"
         name="name"
+        value={taskname}
         onChange={(e) => setTaskname(e.target.value)}
       />
       <button>submit</button>

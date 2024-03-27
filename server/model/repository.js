@@ -29,6 +29,7 @@ export async function setData(data) {
   try {
     // await client.connect();
     await client.setEx("todo", JSON.stringify(data));
+    console.log(data);
     // todos.push(data);
   } catch (error) {
     console.log(error.message);

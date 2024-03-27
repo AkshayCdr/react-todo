@@ -1,10 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import InputForm from "./components/InputForm";
 import TodoList from "./components/TodoList";
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(() => {
+    // (async () => {
+    //   const response = await fetch("http://localhost:3000/task", {
+    //     method: "GET",
+    //     headers: { "Content-Type": "application/json" },
+    //   });
+    //   if (!response.ok) return new Error("Error adding data");
+    //   return await response.json();
+    // })();
+    const data = localStorage.getItem("todos");
+    return data === null ? [] : JSON.parse(data);
+  });
+
+  useEffect(() => {
+    // (async () => {
+    //   const response = await fetch("http://localhost:3000/task", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(todos),
+    //   });
+    //   if (!response.ok) return new Error("Error adding data");
+    // })();
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   function addTodo(taskname) {
     setTodos((currentTodos) => {
@@ -41,7 +64,11 @@ function App() {
   return (
     <>
       <InputForm onSubmit={addTodo} />
-      <TodoList />
+      <TodoList
+        todos={todos}
+        toggleComplete={toggleComplete}
+        handleDelete={handleDelete}
+      />
     </>
   );
 }
