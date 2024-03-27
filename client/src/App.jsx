@@ -1,77 +1,48 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
-import Input from "./components/Input";
-import Task from "./components/Task";
-// import Button from "./components/Button";
 
 function App() {
+  const [taskname, setTaskname] = useState([]);
   const [todos, setTodos] = useState([]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const data = Object.fromEntries(new FormData(event.target));
-
-    const response = await fetch("http://localhost:3000/task", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+  function handleSubmit(e) {
+    e.preventDefault();
+    setTodos((currentTodos) => {
+      return [
+        ...currentTodos,
+        {
+          id: Math.random(),
+          name: taskname,
+        },
+      ];
     });
-    if (!response.ok) return new Error("Error creating data ");
-    populateTask();
-  };
-
-  const populateTask = async () => {
-    const response = await fetch("http://localhost:3000/task", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    if (!response.ok) return new Error("Error getting data");
-    const data = await response.json();
-    console.log(data);
-    setTodos(data);
-  };
-
-  useEffect(() => {
-    (async () => {
-      await populateTask();
-    })();
-  }, []);
-
-  const handleSaveClick = async (event) => {
-    const data = Object.fromEntries(new FormData(event.target));
-    const response = await fetch(`http://localhost:3000/task/${data.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    if (!response.ok) return new Error("Error saving data");
-  };
+  }
+  console.log(todos);
 
   return (
-    <div className="todo-container p-8 border-2 max-w-2xl">
+    <>
       <form action="" onSubmit={handleSubmit}>
-        <Input />
+        <input
+          type="text"
+          name="name"
+          onChange={(e) => setTaskname(e.target.value)}
+        />
+        <button>submit</button>
       </form>
-
-      {todos &&
-        todos.length > 0 &&
-        todos.map((todo) => {
-          return (
-            <form key={todo.id} action="" onSubmit={handleSaveClick}>
-              <Task
-                id={todo.id}
-                name={todo.name}
-                completed={todo.completed}
-                date={todo.date}
-                priority={todo.priority}
-                description={todo.description}
-              />
-            </form>
-          );
-        })}
-
-      {/* <Button name="Delete"></Button> */}
-    </div>
+      <form action="">
+        <input type="checkbox" name="completed" id="" />
+        <input type="text" name="name" id="" />
+        <select name="priority" id="">
+          <option value="">--select--</option>
+          <option value="LOW">LOW</option>
+          <option value="MID">MID</option>
+          <option value="HIGH">HIGH</option>
+        </select>
+        <input type="date" name="date" id="" />
+        <textarea name="description" id="" cols="30" rows="10"></textarea>
+        <button>save</button>
+      </form>
+    </>
   );
 }
 
