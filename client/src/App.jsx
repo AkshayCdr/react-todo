@@ -1,41 +1,41 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import InputForm from "./components/InputForm";
-import TodoList from "./components/TodoList";
+import Todos from "./components/Todos";
+import { deleteCall, udpateCall } from "./apiCalls";
 
 function App() {
-  const [todos, setTodos] = useState(() => {
-    // (async () => {
-    //   const response = await fetch("http://localhost:3000/task", {
-    //     method: "GET",
-    //     headers: { "Content-Type": "application/json" },
-    //   });
-    //   if (!response.ok) return new Error("Error adding data");
-    //   const data = await response.json();
-    //   return data === null ? [] : JSON.parse(data);
-    // })();
-    const data = localStorage.getItem("todos");
-    return data === null ? [] : JSON.parse(data);
-  });
+  const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    // (async () => {
-    //   const response = await fetch("http://localhost:3000/task", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(todos),
-    //   });
-    //   if (!response.ok) return new Error("Error adding data");
-    // })();
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
+    fetchTodos();
+  }, []);
 
-  function addTodo(taskname) {
+  async function fetchTodos() {
+    const response = await fetch(`http://localhost:3000/task`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!response.ok) return new Error("Cannot fetch data");
+    const data = await response.json();
+    setTodos(data);
+  }
+
+  async function addTodo(taskname) {
+    const response = await fetch(`http://localhost:3000/task`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: taskname,
+        completed: false,
+      }),
+    });
+
+    if (!response.ok) return new Error("Error updating data");
     setTodos((currentTodos) => {
       return [
         ...currentTodos,
         {
-          id: Math.random(),
           name: taskname,
           completed: false,
         },
@@ -43,7 +43,15 @@ function App() {
     });
   }
 
-  function toggleComplete(id, completed) {
+  async function toggleComplete(id, completed) {
+    const response = await fetch(`http://localhost:3000/task/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        completed: completed,
+      }),
+    });
+    if (!response.ok) return new Error("Error updating data");
     setTodos((currentTodos) => {
       return currentTodos.map((todo) => {
         if (todo.id === id) return { ...todo, completed };
@@ -52,7 +60,9 @@ function App() {
     });
   }
 
-  function handleDelete(id) {
+  async function handleDelete(id) {
+    const response = await deleteCall(id);
+    if (!response.ok) throw new Error("Error deleting  data");
     setTodos((currentTodos) => {
       return currentTodos.filter((todo) => {
         return todo.id !== id;
@@ -60,28 +70,26 @@ function App() {
     });
   }
 
-  function updateTodo(id, data) {
-    console.log(data);
-    setTodos((currentTodos) => {
-      return currentTodos.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, ...data };
-        }
-        return todo;
-      });
-    });
+  async function updateTodo(id, data) {
+    const response = await udpateCall(id, data);
+    if (!response.ok) throw new Error("Error updating data");
+    setTodos((currentTodos) =>
+      currentTodos.map((todo) => (todo.id === id ? { ...todo, ...data } : todo))
+    );
   }
 
+  console.log(todos);
+
   return (
-    <>
+    <div className="todo-container">
       <InputForm onSubmit={addTodo} />
-      <TodoList
+      <Todos
         todos={todos}
         toggleComplete={toggleComplete}
         handleDelete={handleDelete}
         updateTodo={updateTodo}
       />
-    </>
+    </div>
   );
 }
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function TodoFormItems({
+export default function Todo({
   id,
   name,
   completed,
@@ -12,11 +12,18 @@ export default function TodoFormItems({
   updateTodo,
 }) {
   const [taskname, setTaskName] = useState(name);
-  const [dateState, setDateState] = useState(date);
+  const [dateState, setDateState] = useState(formatDate(date));
   const [descriptionState, setDescriptionState] = useState(description);
   const [priorityState, setPriorityState] = useState(priority);
 
-  function handleSubmit(id) {
+  function formatDate(date) {
+    if (!date) return ""; // Handle null or undefined date
+    const formattedDate = new Date(date).toISOString().split("T")[0];
+    return formattedDate;
+  }
+
+  async function handleSubmit(event, id) {
+    event.preventDefault();
     const data = {
       name: taskname,
       date: dateState,
@@ -24,11 +31,11 @@ export default function TodoFormItems({
       description: descriptionState,
     };
 
-    updateTodo(id, data);
+    await updateTodo(id, data);
   }
 
   return (
-    <form action="" onSubmit={() => handleSubmit(id)}>
+    <form action="" onSubmit={(event) => handleSubmit(event, id)}>
       <input
         type="checkbox"
         name="completed"

@@ -1,16 +1,16 @@
-import TodoFormItems from "./TodoFormItems";
+import Todo from "./Todo";
 
-export default function TodoList({
+export default function Todos({
   todos,
   toggleComplete,
   handleDelete,
   updateTodo,
 }) {
   return (
-    <div className="todos">
+    <div className="tasks-container">
       {todos.map((todo) => {
         return (
-          <TodoFormItems
+          <Todo
             key={todo.id}
             {...todo}
             toggleComplete={toggleComplete}

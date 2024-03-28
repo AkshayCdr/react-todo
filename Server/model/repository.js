@@ -1,43 +1,49 @@
-import { Todo } from "./todos.model.js";
+import { pool } from "../dbConnection.js";
 
-import db from "../dbConnection.js";
-import mongoose from "mongoose";
+let client = await pool.connect();
 
 export async function getData() {
   try {
-    const todo = await Todo.find();
-    return todo;
-  } catch (error) {
-    console.log(error.message);
-  }
-}
-
-export async function setData(data) {
-  try {
-    await Todo.create(data);
-  } catch (error) {
-    console.log(error.message);
-  }
-}
-
-export async function updateData(id, data) {
-  try {
-    const updatedTodo = await Todo.findByIdAndUpdate(id, data, { new: true });
-    if (!updatedTodo) {
-      throw new Error(`Todo with id "${id}" not found`);
-    }
-    return updatedTodo;
+    const query = "SELECT * FROM todos ORDER by id ASC";
+    const result = await client.query(query);
+    return result.rows;
   } catch (error) {
     console.error(error.message);
   }
 }
 
+export async function setData(data) {
+  try {
+    const query = `INSERT INTO todos (name) VALUES ($1)`;
+    const values = [data.name];
+    await client.query(query, values);
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+export async function updateData(id, data) {
+  try {
+    const dateParameter = data.date ? data.date : null;
+    const query = ` UPDATE todos SET name = $1, priority = $2, description = $3, date = $4, completed = $5 WHERE id = $6`;
+    const values = [
+      data.name,
+      data.priority,
+      data.description,
+      dateParameter,
+      data.completed,
+      id,
+    ];
+    await client.query(query, values);
+  } catch (error) {
+    console.error("Cannot excecute query", error.message);
+  }
+}
+
 export async function deleteData(id) {
   try {
-    const deletedTodo = await Todo.findByIdAndDelete(id);
-    if (!deletedTodo) {
-      throw new Error(`Todo with id "${id}" not found`);
-    }
+    const query = ` DELETE FROM todos WHERE id = $1`;
+    await client.query(query, [id]);
   } catch (error) {
     console.error(error.message);
   }
@@ -45,18 +51,10 @@ export async function deleteData(id) {
 
 export async function updateTaskCompletion(id, data) {
   try {
-    const updatedTodo = await Todo.findByIdAndUpdate(
-      id,
-      { $set: { completed: data.completed } },
-      { new: true }
-    );
-
-    if (!updatedTodo) {
-      throw new Error(`Todo with id "${id}" not found`);
-    }
-
-    return updatedTodo;
+    const query = `UPDATE todos SET completed = $1 WHERE id = $2`;
+    const values = [data.completed, id];
+    await client.query(query, values);
   } catch (error) {
-    console.error(error.message);
+    console.log(error.message);
   }
 }
