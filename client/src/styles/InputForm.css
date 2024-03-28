@@ -1,7 +1,6 @@
 .input-container {
   border: 1px solid black;
-  width: 80%;
-  height: fit-content;
+  /* height: fit-content; */
   padding: 1.5em;
   display: flex;
   align-items: center;

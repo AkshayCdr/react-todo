@@ -6,6 +6,7 @@ export default function Textarea({ descriptionState, onChange }) {
       name="description"
       cols="20"
       rows="4"
+      placeholder="Add description ..."
       className="task-description"
       value={descriptionState || ""}
       onChange={onChange}

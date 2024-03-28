@@ -83,9 +83,9 @@ export default function Todo({
             onChange={(e) => setDescriptionState(e.target.value)}
           />
           <div className="btn-container">
-            <button className="btn btn-save">save</button>
+            <button className="btn btn-save">Save</button>
             <button className="btn btn-delete" onClick={() => handleDelete(id)}>
-              delete
+              Delete
             </button>
           </div>
         </div>

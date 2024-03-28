@@ -25,7 +25,7 @@ function App() {
   }
 
   async function addTodo(taskname) {
-    if (!taskname) return alert("Enter taskname");
+    if (taskname.trim() === "") return alert("Enter taskname");
     const response = await addCall(taskname);
     if (!response.ok) return new Error("Error updating data");
     await fetchTodos();
