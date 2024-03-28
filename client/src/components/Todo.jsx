@@ -1,4 +1,7 @@
 import { useState } from "react";
+import Checkbox from "./FormItems/Checkbox";
+import Textbox from "./FormItems/Textbox";
+import Select from "./FormItems/Select";
 
 export default function Todo({
   id,
@@ -17,9 +20,12 @@ export default function Todo({
   const [priorityState, setPriorityState] = useState(priority);
 
   function formatDate(date) {
-    if (!date) return "";
-    const formattedDate = new Date(date).toISOString().split("T")[0];
-    return formattedDate;
+    if (!date) return null;
+    const d = new Date(date);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(d.getDate()).padStart(2, "0")}`;
   }
 
   async function handleSubmit(event, id) {
@@ -36,31 +42,18 @@ export default function Todo({
 
   return (
     <form action="" onSubmit={(event) => handleSubmit(event, id)}>
-      <input
-        type="checkbox"
-        name="completed"
-        id=""
-        checked={completed}
+      <Checkbox
+        completed={completed}
         onChange={(e) => toggleComplete(id, e.target.checked)}
       />
-      <input
-        type="text"
-        name="name"
-        id=""
-        value={taskname}
+      <Textbox
+        taskname={taskname}
         onChange={(e) => setTaskName(e.target.value)}
       />
-      <select
-        name="priority"
-        id=""
-        value={priorityState || ""}
+      <Select
+        priorityState={priorityState}
         onChange={(e) => setPriorityState(e.target.value)}
-      >
-        <option value="">--select--</option>
-        <option value="LOW">LOW</option>
-        <option value="MID">MID</option>
-        <option value="HIGH">HIGH</option>
-      </select>
+      />
       <input
         type="date"
         name="date"
