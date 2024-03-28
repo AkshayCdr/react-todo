@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../styles/InputForm.css";
 
 export default function InputForm({ onSubmit }) {
   const [taskname, setTaskname] = useState("");
