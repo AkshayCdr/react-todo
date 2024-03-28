@@ -2,72 +2,52 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import InputForm from "./components/InputForm";
 import Todos from "./components/Todos";
-import { deleteCall, udpateCall } from "./apiCalls";
+import {
+  addCall,
+  deleteCall,
+  getCall,
+  setCompleteCall,
+  udpateCall,
+} from "./apiCalls";
 
 function App() {
   const [todos, setTodos] = useState([]);
 
-  useEffect(() => {
-    fetchTodos();
-  }, []);
+  useEffect(() => fetchTodos(), []);
 
   async function fetchTodos() {
-    const response = await fetch(`http://localhost:3000/task`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
+    const response = await getCall();
     if (!response.ok) return new Error("Cannot fetch data");
     const data = await response.json();
     setTodos(data);
   }
 
   async function addTodo(taskname) {
-    const response = await fetch(`http://localhost:3000/task`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+    const response = await addCall(taskname);
+    if (!response.ok) return new Error("Error updating data");
+    setTodos((currentTodos) => [
+      ...currentTodos,
+      {
         name: taskname,
         completed: false,
-      }),
-    });
-
-    if (!response.ok) return new Error("Error updating data");
-    setTodos((currentTodos) => {
-      return [
-        ...currentTodos,
-        {
-          name: taskname,
-          completed: false,
-        },
-      ];
-    });
+      },
+    ]);
   }
 
   async function toggleComplete(id, completed) {
-    const response = await fetch(`http://localhost:3000/task/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        completed: completed,
-      }),
-    });
+    const response = await setCompleteCall(id, completed);
     if (!response.ok) return new Error("Error updating data");
-    setTodos((currentTodos) => {
-      return currentTodos.map((todo) => {
-        if (todo.id === id) return { ...todo, completed };
-        return todo;
-      });
-    });
+    setTodos((currentTodos) =>
+      currentTodos.map((todo) =>
+        todo.id === id ? { ...todo, completed } : todo
+      )
+    );
   }
 
   async function handleDelete(id) {
     const response = await deleteCall(id);
     if (!response.ok) throw new Error("Error deleting  data");
-    setTodos((currentTodos) => {
-      return currentTodos.filter((todo) => {
-        return todo.id !== id;
-      });
-    });
+    setTodos((currentTodos) => currentTodos.filter((todo) => todo.id !== id));
   }
 
   async function updateTodo(id, data) {
