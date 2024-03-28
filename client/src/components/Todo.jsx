@@ -2,6 +2,8 @@ import { useState } from "react";
 import Checkbox from "./FormItems/Checkbox";
 import Textbox from "./FormItems/Textbox";
 import Select from "./FormItems/Select";
+// import Date from "./FormItems/Date";
+import Textarea from "./FormItems/Textarea";
 
 export default function Todo({
   id,
@@ -54,6 +56,10 @@ export default function Todo({
         priorityState={priorityState}
         onChange={(e) => setPriorityState(e.target.value)}
       />
+      {/* <Date
+        dateState={dateState}
+        onChange={(e) => setDateState(e.target.value)}
+      /> */}
       <input
         type="date"
         name="date"
@@ -61,14 +67,10 @@ export default function Todo({
         value={dateState || ""}
         onChange={(e) => setDateState(e.target.value)}
       />
-      <textarea
-        name="description"
-        id=""
-        cols="30"
-        rows="10"
-        value={descriptionState || ""}
+      <Textarea
+        descriptionState={descriptionState}
         onChange={(e) => setDescriptionState(e.target.value)}
-      ></textarea>
+      />
       <button>save</button>
       <button onClick={() => handleDelete(id)}>delete</button>
     </form>
