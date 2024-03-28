@@ -36,7 +36,7 @@ export async function getCall() {
 }
 
 export async function setCompleteCall(id, completed) {
-  const response = await fetch(`http://localhost:3000/task/${id}`, {
+  const response = await fetch(`http://localhost:3000/task/done/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

@@ -17,7 +17,7 @@ export default function Todo({
   const [priorityState, setPriorityState] = useState(priority);
 
   function formatDate(date) {
-    if (!date) return ""; // Handle null or undefined date
+    if (!date) return "";
     const formattedDate = new Date(date).toISOString().split("T")[0];
     return formattedDate;
   }
@@ -53,7 +53,7 @@ export default function Todo({
       <select
         name="priority"
         id=""
-        value={priorityState}
+        value={priorityState || ""}
         onChange={(e) => setPriorityState(e.target.value)}
       >
         <option value="">--select--</option>
@@ -65,7 +65,7 @@ export default function Todo({
         type="date"
         name="date"
         id=""
-        value={dateState}
+        value={dateState || ""}
         onChange={(e) => setDateState(e.target.value)}
       />
       <textarea
@@ -73,7 +73,7 @@ export default function Todo({
         id=""
         cols="30"
         rows="10"
-        value={descriptionState}
+        value={descriptionState || ""}
         onChange={(e) => setDescriptionState(e.target.value)}
       ></textarea>
       <button>save</button>

@@ -13,28 +13,33 @@ import {
 function App() {
   const [todos, setTodos] = useState([]);
 
-  useEffect(() => fetchTodos(), []);
+  useEffect(() => {
+    fetchTodos();
+  }, []);
 
   async function fetchTodos() {
     const response = await getCall();
     if (!response.ok) return new Error("Cannot fetch data");
     const data = await response.json();
+    console.log(data);
     setTodos(data);
   }
 
   async function addTodo(taskname) {
     const response = await addCall(taskname);
     if (!response.ok) return new Error("Error updating data");
-    setTodos((currentTodos) => [
-      ...currentTodos,
-      {
-        name: taskname,
-        completed: false,
-      },
-    ]);
+    // setTodos((currentTodos) => [
+    //   ...currentTodos,
+    //   {
+    //     name: taskname,
+    //     completed: false,
+    //   },
+    // ]);
+    await fetchTodos();
   }
 
   async function toggleComplete(id, completed) {
+    console.log(id, completed);
     const response = await setCompleteCall(id, completed);
     if (!response.ok) return new Error("Error updating data");
     setTodos((currentTodos) =>
@@ -51,6 +56,7 @@ function App() {
   }
 
   async function updateTodo(id, data) {
+    console.log(id, data);
     const response = await udpateCall(id, data);
     if (!response.ok) throw new Error("Error updating data");
     setTodos((currentTodos) =>
