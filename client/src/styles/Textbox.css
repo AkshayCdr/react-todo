@@ -1,0 +1,7 @@
+.task-name {
+  border: none;
+  /* width: 7rem; */
+  background: transparent;
+  color: white;
+  font-weight: bold;
+}

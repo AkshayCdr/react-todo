@@ -1,5 +1,5 @@
 import Todo from "./Todo";
-
+import "../styles/Todos.css";
 export default function Todos({
   todos,
   toggleComplete,

@@ -1,10 +1,12 @@
+import "../../styles/Select.css";
+
 export default function Select({ priorityState, onChange }) {
   return (
     <select
       name="priority"
-      id=""
       value={priorityState || ""}
       onChange={onChange}
+      className="task-priority"
     >
       <option value="">--select--</option>
       <option value="LOW">LOW</option>

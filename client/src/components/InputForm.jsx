@@ -16,10 +16,12 @@ export default function InputForm({ onSubmit }) {
         <input
           type="text"
           name="name"
+          className="taskname"
+          placeholder="Add task"
           value={taskname}
           onChange={(e) => setTaskname(e.target.value)}
         />
-        <button>submit</button>
+        <button className="btn">submit</button>
       </form>
     </div>
   );

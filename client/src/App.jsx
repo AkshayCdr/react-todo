@@ -25,11 +25,11 @@ function App() {
   }
 
   async function addTodo(taskname) {
+    if (!taskname) return alert("Enter taskname");
     const response = await addCall(taskname);
     if (!response.ok) return new Error("Error updating data");
     await fetchTodos();
   }
-
   async function toggleComplete(id, completed) {
     const response = await setCompleteCall(id, completed);
     if (!response.ok) return new Error("Error updating data");

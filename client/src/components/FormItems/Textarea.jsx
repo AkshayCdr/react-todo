@@ -1,10 +1,12 @@
+import "../../styles/Textarea.css";
+
 export default function Textarea({ descriptionState, onChange }) {
   return (
     <textarea
       name="description"
-      id=""
-      cols="30"
-      rows="10"
+      cols="20"
+      rows="4"
+      className="task-description"
       value={descriptionState || ""}
       onChange={onChange}
     ></textarea>

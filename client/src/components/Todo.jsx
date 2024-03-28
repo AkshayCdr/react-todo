@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../styles/Todo.css";
 import Checkbox from "./FormItems/Checkbox";
 import Textbox from "./FormItems/Textbox";
 import Select from "./FormItems/Select";
@@ -21,6 +22,7 @@ export default function Todo({
   const [descriptionState, setDescriptionState] = useState(description);
   const [priorityState, setPriorityState] = useState(priority);
 
+  const [detailsVisible, setDetailsVisible] = useState(false);
   function formatDate(date) {
     if (!date) return null;
     const d = new Date(date);
@@ -41,38 +43,53 @@ export default function Todo({
 
     await updateTodo(id, data);
   }
-
+  const toggleDetails = () => {
+    setDetailsVisible(!detailsVisible);
+  };
   return (
-    <form action="" onSubmit={(event) => handleSubmit(event, id)}>
-      <Checkbox
-        completed={completed}
-        onChange={(e) => toggleComplete(id, e.target.checked)}
-      />
-      <Textbox
-        taskname={taskname}
-        onChange={(e) => setTaskName(e.target.value)}
-      />
-      <Select
-        priorityState={priorityState}
-        onChange={(e) => setPriorityState(e.target.value)}
-      />
-      {/* <Date
+    <div className={`task-container ${completed ? "blur" : ""}`}>
+      <form action="" onSubmit={(event) => handleSubmit(event, id)}>
+        <div className="task-head">
+          <Checkbox
+            completed={completed}
+            onChange={(e) => toggleComplete(id, e.target.checked)}
+          />
+          <Textbox
+            taskname={taskname}
+            onChange={(e) => setTaskName(e.target.value)}
+          />
+          <Select
+            priorityState={priorityState}
+            onChange={(e) => setPriorityState(e.target.value)}
+          />
+          <button className="btn-header" onClick={toggleDetails}>
+            {detailsVisible ? "Collapse" : "Expand"}
+          </button>
+        </div>
+        <div className={`task-details ${detailsVisible ? "" : "hidden"}`}>
+          {/* <Date
         dateState={dateState}
         onChange={(e) => setDateState(e.target.value)}
       /> */}
-      <input
-        type="date"
-        name="date"
-        id=""
-        value={dateState || ""}
-        onChange={(e) => setDateState(e.target.value)}
-      />
-      <Textarea
-        descriptionState={descriptionState}
-        onChange={(e) => setDescriptionState(e.target.value)}
-      />
-      <button>save</button>
-      <button onClick={() => handleDelete(id)}>delete</button>
-    </form>
+          <input
+            type="date"
+            name="date"
+            className="task-dateselector"
+            value={dateState || ""}
+            onChange={(e) => setDateState(e.target.value)}
+          />
+          <Textarea
+            descriptionState={descriptionState}
+            onChange={(e) => setDescriptionState(e.target.value)}
+          />
+          <div className="btn-container">
+            <button className="btn btn-save">save</button>
+            <button className="btn btn-delete" onClick={() => handleDelete(id)}>
+              delete
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 }

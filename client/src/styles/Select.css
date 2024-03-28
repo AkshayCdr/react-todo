@@ -1,0 +1,7 @@
+.task-priority {
+  border: none;
+  background-color: white;
+  background: transparent;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+}
