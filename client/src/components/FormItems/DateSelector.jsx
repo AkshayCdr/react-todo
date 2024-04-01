@@ -1,4 +1,4 @@
-export default function Date({ dateState, onChange }) {
+export default function DateSelector({ dateState, onChange }) {
   return (
     <input
       type="date"

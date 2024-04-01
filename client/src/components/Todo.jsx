@@ -3,7 +3,7 @@ import "../styles/Todo.css";
 import Checkbox from "./FormItems/Checkbox";
 import Textbox from "./FormItems/Textbox";
 import Select from "./FormItems/Select";
-// import Date from "./FormItems/Date";
+import DateSelector from "./FormItems/DateSelector";
 import Textarea from "./FormItems/Textarea";
 
 export default function Todo({
@@ -25,11 +25,11 @@ export default function Todo({
   const [detailsVisible, setDetailsVisible] = useState(false);
   function formatDate(date) {
     if (!date) return null;
-    const d = new Date(date);
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(
+    const newDate = new Date(date);
+    return `${newDate.getFullYear()}-${String(newDate.getMonth() + 1).padStart(
       2,
       "0"
-    )}-${String(d.getDate()).padStart(2, "0")}`;
+    )}-${String(newDate.getDate()).padStart(2, "0")}`;
   }
 
   async function handleSubmit(event, id) {
@@ -43,7 +43,8 @@ export default function Todo({
 
     await updateTodo(id, data);
   }
-  const toggleDetails = () => {
+  const toggleDetails = (event) => {
+    event.preventDefault();
     setDetailsVisible(!detailsVisible);
   };
   return (
@@ -67,15 +68,8 @@ export default function Todo({
           </button>
         </div>
         <div className={`task-details ${detailsVisible ? "" : "hidden"}`}>
-          {/* <Date
-        dateState={dateState}
-        onChange={(e) => setDateState(e.target.value)}
-      /> */}
-          <input
-            type="date"
-            name="date"
-            className="task-dateselector"
-            value={dateState || ""}
+          <DateSelector
+            dateState={dateState}
             onChange={(e) => setDateState(e.target.value)}
           />
           <Textarea
@@ -84,7 +78,10 @@ export default function Todo({
           />
           <div className="btn-container">
             <button className="btn btn-save">Save</button>
-            <button className="btn btn-delete" onClick={() => handleDelete(id)}>
+            <button
+              className="btn btn-delete"
+              onClick={(event) => handleDelete(event, id)}
+            >
               Delete
             </button>
           </div>

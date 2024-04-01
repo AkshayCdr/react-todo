@@ -24,7 +24,7 @@ export async function setData(data) {
 
 export async function updateData(id, data) {
   try {
-    const dateParameter = data.date ? data.date : null;
+    const dateParameter = data.date || null;
     const query = ` UPDATE todos SET name = $1, priority = $2, description = $3, date = $4, completed = $5 WHERE id = $6`;
     const values = [
       data.name,

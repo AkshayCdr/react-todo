@@ -40,13 +40,15 @@ function App() {
     );
   }
 
-  async function handleDelete(id) {
+  async function handleDelete(event, id) {
+    event.preventDefault();
     const response = await deleteCall(id);
     if (!response.ok) throw new Error("Error deleting  data");
     setTodos((currentTodos) => currentTodos.filter((todo) => todo.id !== id));
   }
 
   async function updateTodo(id, data) {
+    if (data.name.trim() === "") return alert("Taskname empty");
     const response = await udpateCall(id, data);
     if (!response.ok) throw new Error("Error updating data");
     setTodos((currentTodos) =>
