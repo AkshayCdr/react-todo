@@ -35,8 +35,8 @@ function App() {
     if (!response.ok) return new Error("Error updating data");
     setTodos((currentTodos) =>
       currentTodos.map((todo) =>
-        todo.id === id ? { ...todo, completed } : todo
-      )
+        todo.id === id ? { ...todo, completed } : todo,
+      ),
     );
   }
 
@@ -52,7 +52,9 @@ function App() {
     const response = await udpateCall(id, data);
     if (!response.ok) throw new Error("Error updating data");
     setTodos((currentTodos) =>
-      currentTodos.map((todo) => (todo.id === id ? { ...todo, ...data } : todo))
+      currentTodos.map((todo) =>
+        todo.id === id ? { ...todo, ...data } : todo,
+      ),
     );
   }
 
