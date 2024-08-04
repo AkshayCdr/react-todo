@@ -1,7 +1,7 @@
 import {
   getData,
   setData,
-  // updateData,
+  updateData,
   // deleteData,
   // updateTaskCompletion,
 } from "../model/repository.js";
@@ -26,15 +26,15 @@ export async function addTodos(req, res) {
   }
 }
 
-// export async function updateTodos(req, res) {
-//   try {
-//     const response = await updateData(req.params.id, req.body);
-//     res.status(200).json({ message: "succesfully updated", data: response });
-//   } catch (error) {
-//     console.log(error.message);
-//     res.status(500).json({ message: "server error" });
-//   }
-// }
+export async function updateTodos(req, res) {
+  try {
+    await updateData(req.params.id, req.body);
+    res.status(200).json({ message: "succesfully updated" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: "server error" });
+  }
+}
 
 // export async function deleteTodos(req, res) {
 //   try {

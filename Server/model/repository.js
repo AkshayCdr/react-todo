@@ -1,17 +1,6 @@
+import { eq } from "drizzle-orm";
 import { db } from "../dbConnection.js";
 import { todos } from "./schema/todo.js";
-
-// let client = await pool.connect();
-
-// export async function getData() {
-//   try {
-//     const query = "SELECT * FROM todos ORDER by id ASC";
-//     const result = await client.query(query);
-//     return result.rows;
-//   } catch (error) {
-//     console.error(error.message);
-//   }
-// }
 
 export async function getData() {
   try {
@@ -19,28 +8,16 @@ export async function getData() {
     return result[0];
   } catch (error) {
     console.error(error.message);
+    throw new Error("Error deleting data");
   }
 }
 
-// export async function setData(data) {
-//   try {
-//     const query = `INSERT INTO todos (name) VALUES ($1)`;
-//     const values = [data.name];
-//     await client.query(query, values);
-//   } catch (error) {
-//     console.error(error.message);
-//   }
-// }
-
 export async function setData(data) {
   try {
-    // const query = `INSERT INTO todos (name) VALUES ($1)`;
     await db.insert(todos).values({ name: data.name });
-
-    // const values = [data.name];
-    // await client.query(query, values);
   } catch (error) {
     console.error(error.message);
+    throw new Error("error inserting data");
   }
 }
 
@@ -61,6 +38,25 @@ export async function setData(data) {
 //     console.error("Cannot excecute query", error.message);
 //   }
 // }
+
+export async function updateData(id, data) {
+  try {
+    const dateParameter = data.date || null;
+    await db
+      .update(todos)
+      .set({
+        name: data.name,
+        priority: data.priority,
+        description: data.description,
+        date: dateParameter,
+        completed: data.completed,
+      })
+      .where(eq(todos.id, id));
+  } catch (error) {
+    console.error("Cannot excecute query", error.message);
+    throw new Error("Error updating data");
+  }
+}
 
 // export async function deleteData(id) {
 //   try {

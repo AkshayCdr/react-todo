@@ -2,7 +2,7 @@ import express from "express";
 import {
   getTodo,
   addTodos,
-  // updateTodos,
+  updateTodos,
   // deleteTodos,
   // updateCompleteTask,
 } from "../controller/task.controller.js";
@@ -13,7 +13,7 @@ router.get("/", getTodo);
 
 router.post("/", addTodos);
 
-// router.put("/:id", updateTodos);
+router.put("/:id", updateTodos);
 
 // router.put("/done/:id", updateCompleteTask);
 
