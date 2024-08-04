@@ -1,22 +1,22 @@
+const API_KEY = import.meta.env.VITE_API_KEY;
+
 export async function udpateCall(id, data) {
-  const response = await fetch(`http://localhost:3000/task/${id}`, {
+  return fetch(`${API_KEY}/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  return response;
 }
 
 export async function deleteCall(id) {
-  const response = await fetch(`http://localhost:3000/task/${id}`, {
+  return fetch(`${API_KEY}/${id}`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
   });
-  return response;
 }
 
 export async function addCall(taskname) {
-  const response = await fetch(`http://localhost:3000/task`, {
+  return fetch(`${API_KEY}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -24,24 +24,21 @@ export async function addCall(taskname) {
       completed: false,
     }),
   });
-  return response;
 }
 
 export async function getCall() {
-  const response = await fetch(`http://localhost:3000/task`, {
+  return fetch(`${API_KEY}`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
-  return response;
 }
 
 export async function setCompleteCall(id, completed) {
-  const response = await fetch(`http://localhost:3000/task/done/${id}`, {
+  return fetch(`${API_KEY}/done/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       completed: completed,
     }),
   });
-  return response;
 }
