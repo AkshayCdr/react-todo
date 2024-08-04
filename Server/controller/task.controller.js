@@ -2,8 +2,8 @@ import {
   getData,
   setData,
   updateData,
-  // deleteData,
-  // updateTaskCompletion,
+  deleteData,
+  updateTaskCompletion,
 } from "../model/repository.js";
 
 export async function getTodo(req, res) {
@@ -36,22 +36,22 @@ export async function updateTodos(req, res) {
   }
 }
 
-// export async function deleteTodos(req, res) {
-//   try {
-//     await deleteData(req.params.id);
-//     res.status(204).json({ message: "successfull deleted" });
-//   } catch (error) {
-//     console.log(error.message);
-//     res.status(500).json({ message: "server error" });
-//   }
-// }
+export async function deleteTodos(req, res) {
+  try {
+    await deleteData(req.params.id);
+    res.status(200).json({ message: "successfull deleted" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: "server error" });
+  }
+}
 
-// export async function updateCompleteTask(req, res) {
-//   try {
-//     await updateTaskCompletion(req.params.id, req.body);
-//     res.status(200).json({ message: "succesfully updated checkbox" });
-//   } catch (error) {
-//     console.log(error.message);
-//     res.status(500).json({ message: "server error" });
-//   }
-// }
+export async function updateCompleteTask(req, res) {
+  try {
+    await updateTaskCompletion(req.params.id, req.body);
+    res.status(200).json({ message: "succesfully updated checkbox" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: "server error" });
+  }
+}
