@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npm install && cd client && npm install && npm run build",
+    "dev": "npm install &&  npm run generate && npm run migrate && cd client && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
